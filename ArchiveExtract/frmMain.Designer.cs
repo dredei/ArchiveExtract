@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.tbPath = new System.Windows.Forms.TextBox();
             this.lvFiles = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cms1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSelectDir = new System.Windows.Forms.Button();
             this.pbAll = new System.Windows.Forms.ProgressBar();
             this.btnSearch = new System.Windows.Forms.Button();
@@ -44,6 +47,7 @@
             this.fbd1 = new System.Windows.Forms.FolderBrowserDialog();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.btnRemOrange = new System.Windows.Forms.Button();
+            this.cms1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -68,9 +72,9 @@
             this.lvFiles.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2});
+            this.lvFiles.ContextMenuStrip = this.cms1;
             this.lvFiles.FullRowSelect = true;
             this.lvFiles.Location = new System.Drawing.Point(3, 42);
-            this.lvFiles.MultiSelect = false;
             this.lvFiles.Name = "lvFiles";
             this.lvFiles.Size = new System.Drawing.Size(273, 139);
             this.lvFiles.TabIndex = 2;
@@ -86,6 +90,20 @@
             // 
             this.columnHeader2.Text = "Размер";
             this.columnHeader2.Width = 70;
+            // 
+            // cms1
+            // 
+            this.cms1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1});
+            this.cms1.Name = "cms1";
+            this.cms1.Size = new System.Drawing.Size(121, 26);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(120, 22);
+            this.toolStripMenuItem1.Text = "Удалить";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // btnSelectDir
             // 
@@ -221,6 +239,7 @@
             this.Text = "ArchiveExtract";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
+            this.cms1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -244,6 +263,8 @@
         private System.Windows.Forms.FolderBrowserDialog fbd1;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Button btnRemOrange;
+        private System.Windows.Forms.ContextMenuStrip cms1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
     }
 }
 

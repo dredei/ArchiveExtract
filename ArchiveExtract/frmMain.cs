@@ -66,12 +66,13 @@ namespace ArchiveExtract
             enableObjs();
         }
 
-        private void btnSearch_Click( object sender, EventArgs e )
+        private void fillLv()
         {
-            enableObjs();
+            if ( ae == null )
+            {
+                return;
+            }
             lvFiles.Items.Clear();
-            ae = new ArchiveE( tbPath.Text, cbZip.Checked, cbRar.Checked, cbRemove.Checked );
-            ae.searchFiles();
             List<string> files = ae.getFiles();
             for ( int i = 0; i < files.Count; i++ )
             {
@@ -84,6 +85,14 @@ namespace ArchiveExtract
                 lvFiles.Items[ lvFiles.Items.Count - 1 ].EnsureVisible();
             }
             lvFiles.Sort();
+        }
+
+        private void btnSearch_Click( object sender, EventArgs e )
+        {
+            enableObjs();            
+            ae = new ArchiveE( tbPath.Text, cbZip.Checked, cbRar.Checked, cbRemove.Checked );
+            ae.searchFiles();
+            fillLv();
             enableObjs();
         }
 
@@ -149,6 +158,18 @@ namespace ArchiveExtract
             {
                 ae.removeOrangeFiles();
                 MessageBox.Show( "Удалено!", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information );
+            }
+        }
+
+        private void toolStripMenuItem1_Click( object sender, EventArgs e )
+        {
+            if ( ae == null || lvFiles.SelectedItems.Count == 0 )
+            {
+                return;
+            }
+            for ( int i = 0; i < lvFiles.SelectedItems.Count; i++ )
+            {
+                ae.removeFile( lvFiles.SelectedItems[ i ].Index );
             }
         }
     }

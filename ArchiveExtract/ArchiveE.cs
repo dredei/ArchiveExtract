@@ -56,6 +56,11 @@ namespace ArchiveExtract
             this.remove = remove;
         }
 
+        public void removeFile( int index )
+        {
+            files.RemoveRange( index, 1 );
+        }
+
         public void searchFiles()
         {
             if ( zip )
@@ -70,8 +75,12 @@ namespace ArchiveExtract
 
         public List<string> searchFilesByExtension( string extension )
         {
-            string[] files = Directory.GetFiles( path, extension, SearchOption.AllDirectories );
-            return files.ToList<string>();
+            if ( Directory.Exists( path ) )
+            {
+                string[] files = Directory.GetFiles( path, extension, SearchOption.AllDirectories );
+                return files.ToList<string>();
+            }
+            return new List<string>();
         }
 
         public void removeOrangeFiles()
@@ -148,7 +157,7 @@ namespace ArchiveExtract
                     {
                         try
                         {
-                            File.Delete( file );                            
+                            File.Delete( file );
                         }
                         catch
                         {
