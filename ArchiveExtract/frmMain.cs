@@ -61,7 +61,7 @@ namespace ArchiveExtract
             if ( orangeFilesCount > 0 )
             {
                 const string text = "Найдено {0} \"оранжевых\" файлов.";
-                MessageBox.Show( String.Format( text, orangeFilesCount ), "Информация", MessageBoxButtons.YesNo, MessageBoxIcon.Question );
+                MessageBox.Show( String.Format( text, orangeFilesCount ), "Информация", MessageBoxButtons.OK, MessageBoxIcon.Question );
             }
             enableObjs();
         }
