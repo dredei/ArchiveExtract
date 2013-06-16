@@ -153,7 +153,7 @@ namespace ArchiveExtract
                 }
                 finally
                 {
-                    if ( this.remove )
+                    if ( this.remove && color != Color.Red )
                     {
                         try
                         {
