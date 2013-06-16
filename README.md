@@ -1,6 +1,6 @@
 ArchiveExtract
 ==============
 
-Search and extraction of archives.
+Поиск и распаковка архивов (с возможностью удаления).
 
-Using SharpCompress: https://github.com/adamhathcock/sharpcompress
+Используется SharpCompress: https://github.com/adamhathcock/sharpcompress
