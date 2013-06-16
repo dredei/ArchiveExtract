@@ -98,7 +98,7 @@ namespace ArchiveExtract
         {
             UpdEventExtractArgs args = new UpdEventExtractArgs();
             orangeFiles.Clear();
-            string folder = path + @"\";
+            //string folder = path + @"\";
             Color color = Color.Yellow;
             args.progress = 0;
             args.maxProgress = files.Count;
@@ -124,7 +124,7 @@ namespace ArchiveExtract
                             {
                                 if ( !reader.Entry.IsDirectory )
                                 {
-                                    reader.WriteEntryToDirectory( folder + Path.GetFileNameWithoutExtension( file ), ExtractOptions.ExtractFullPath | ExtractOptions.Overwrite );
+                                    reader.WriteEntryToDirectory( Path.GetDirectoryName( file ) +@"\" + Path.GetFileNameWithoutExtension( file ), ExtractOptions.ExtractFullPath | ExtractOptions.Overwrite );
                                 }
                             }
                         }
@@ -138,7 +138,7 @@ namespace ArchiveExtract
                         {
                             if ( !entry.IsDirectory )
                             {
-                                entry.WriteToDirectory( folder + Path.GetFileNameWithoutExtension( file ), ExtractOptions.ExtractFullPath | ExtractOptions.Overwrite );
+                                entry.WriteToDirectory( Path.GetDirectoryName( file ) + @"\" + Path.GetFileNameWithoutExtension( file ), ExtractOptions.ExtractFullPath | ExtractOptions.Overwrite );
                             }
                             args.archiveProgress++;
                             updEventExtract( this, args );
