@@ -18,8 +18,7 @@ namespace ArchiveExtract
         public int archiveMaxProgress { get; set; }
         public int index { get; set; }
         public bool success { get; set; }
-        public bool marquee { get; set; }
-        public Color color { get; set; }
+        public Color color { get; set; } // Красный - невозможно распаковать, оранжевый - невозможно удалить
     }
 
     class ArchiveE
@@ -29,6 +28,7 @@ namespace ArchiveExtract
         bool rar;
         bool remove;
         List<string> files;
+        List<string> orangeFiles;
         public event EventHandler<UpdEventExtractArgs> updEventExtract = delegate { };
 
         public ArchiveE( string path, bool zip, bool rar, bool remove )
@@ -38,11 +38,22 @@ namespace ArchiveExtract
             this.rar = rar;
             this.remove = remove;
             files = new List<string>();
+            orangeFiles = new List<string>();
         }
 
         public List<string> getFiles()
         {
             return files;
+        }
+
+        public List<string> getOrangeFiles()
+        {
+            return orangeFiles;
+        }
+
+        public void setRemove( bool remove )
+        {
+            this.remove = remove;
         }
 
         public void searchFiles()
@@ -63,9 +74,21 @@ namespace ArchiveExtract
             return files.ToList<string>();
         }
 
+        public void removeOrangeFiles()
+        {
+            for ( int i = 0; i < orangeFiles.Count; i++ )
+            {
+                string file = orangeFiles[ i ];
+                File.SetAttributes( file, FileAttributes.Normal );
+                File.Delete( file );
+            }
+            orangeFiles.Clear();
+        }
+
         public void extractFiles()
         {
             UpdEventExtractArgs args = new UpdEventExtractArgs();
+            orangeFiles.Clear();
             string folder = path + @"\";
             Color color = Color.Yellow;
             args.progress = 0;
@@ -75,7 +98,6 @@ namespace ArchiveExtract
             {
                 args.color = Color.Yellow;
                 args.index = i;
-                args.marquee = false;
                 updEventExtract( this, args );
                 string file = files[ i ];
                 try
@@ -85,7 +107,6 @@ namespace ArchiveExtract
                     {
                         args.archiveProgress = 0;
                         args.archiveMaxProgress = 1;
-                        args.marquee = true;
                         updEventExtract( this, args );
                         using ( Stream stream = File.OpenRead( file ) )
                         {
@@ -101,7 +122,6 @@ namespace ArchiveExtract
                     }
                     else
                     {
-                        args.marquee = false;
                         args.archiveProgress = 0;
                         args.archiveMaxProgress = archive.Entries.Count();
                         updEventExtract( this, args );
@@ -115,6 +135,7 @@ namespace ArchiveExtract
                             updEventExtract( this, args );
                         }
                     }
+                    archive.Dispose();
                     args.color = Color.Green;
                 }
                 catch
@@ -123,6 +144,18 @@ namespace ArchiveExtract
                 }
                 finally
                 {
+                    if ( this.remove )
+                    {
+                        try
+                        {
+                            File.Delete( file );                            
+                        }
+                        catch
+                        {
+                            args.color = Color.Orange;
+                            orangeFiles.Add( file );
+                        }
+                    }
                     args.progress++;
                     updEventExtract( this, args );
                 }

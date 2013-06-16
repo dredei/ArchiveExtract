@@ -40,10 +40,10 @@
             this.cbRemove = new System.Windows.Forms.CheckBox();
             this.cbZip = new System.Windows.Forms.CheckBox();
             this.cbRar = new System.Windows.Forms.CheckBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.pbArchive = new System.Windows.Forms.ProgressBar();
             this.fbd1 = new System.Windows.Forms.FolderBrowserDialog();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.btnRemOrange = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -164,16 +164,6 @@
             this.cbRar.Text = "RAR";
             this.cbRar.UseVisualStyleBackColor = true;
             // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(3, 331);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox2.Size = new System.Drawing.Size(273, 53);
-            this.textBox2.TabIndex = 11;
-            // 
             // pbArchive
             // 
             this.pbArchive.Location = new System.Drawing.Point(3, 231);
@@ -193,15 +183,26 @@
             this.linkLabel1.Text = "Site";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
+            // btnRemOrange
+            // 
+            this.btnRemOrange.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRemOrange.Location = new System.Drawing.Point(3, 331);
+            this.btnRemOrange.Name = "btnRemOrange";
+            this.btnRemOrange.Size = new System.Drawing.Size(273, 23);
+            this.btnRemOrange.TabIndex = 13;
+            this.btnRemOrange.Text = "Удалить оранжевые файлы";
+            this.btnRemOrange.UseVisualStyleBackColor = true;
+            this.btnRemOrange.Click += new System.EventHandler(this.btnRemOrange_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(279, 388);
+            this.ClientSize = new System.Drawing.Size(279, 355);
+            this.Controls.Add(this.btnRemOrange);
             this.Controls.Add(this.linkLabel1);
-            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.cbRar);
             this.Controls.Add(this.cbZip);
             this.Controls.Add(this.cbRemove);
@@ -239,10 +240,10 @@
         private System.Windows.Forms.CheckBox cbRemove;
         private System.Windows.Forms.CheckBox cbZip;
         private System.Windows.Forms.CheckBox cbRar;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.ProgressBar pbArchive;
         private System.Windows.Forms.FolderBrowserDialog fbd1;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Button btnRemOrange;
     }
 }
 

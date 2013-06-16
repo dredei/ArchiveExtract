@@ -49,20 +49,20 @@ namespace ArchiveExtract
             pbArchive.Value = e.archiveProgress;
             lvFiles.Items[ e.index ].BackColor = e.color;
             lvFiles.Items[ e.index ].EnsureVisible();
-            if ( e.marquee )
-            {
-                pbArchive.Style = ProgressBarStyle.Marquee;
-            }
-            else
-            {
-                pbArchive.Style = ProgressBarStyle.Blocks;
-            }
         }
 
         private void workExtract()
         {
             ae.extractFiles();
+            pbArchive.Style = ProgressBarStyle.Blocks;
+            pbArchive.MarqueeAnimationSpeed = 0;
             MessageBox.Show( "Завершено", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information );
+            int orangeFilesCount = ( ae.getOrangeFiles() ).Count;
+            if ( orangeFilesCount > 0 )
+            {
+                const string text = "Найдено {0} \"оранжевых\" файлов.";
+                MessageBox.Show( String.Format( text, orangeFilesCount ), "Информация", MessageBoxButtons.YesNo, MessageBoxIcon.Question );
+            }
             enableObjs();
         }
 
@@ -96,6 +96,7 @@ namespace ArchiveExtract
             btnExtract.Enabled = !btnExtract.Enabled;
             btnSearch.Enabled = !btnSearch.Enabled;
             btnSelectDir.Enabled = !btnSelectDir.Enabled;
+            btnRemOrange.Enabled = !btnRemOrange.Enabled;
         }
 
         private void btnExtract_Click( object sender, EventArgs e )
@@ -109,6 +110,7 @@ namespace ArchiveExtract
                 return;
             }
             enableObjs();
+            ae.setRemove( cbRemove.Checked );
             ae.updEventExtract += new EventHandler<UpdEventExtractArgs>( updProgress );
             thr = new Thread( workExtract );
             thr.Start();
@@ -139,6 +141,15 @@ namespace ArchiveExtract
         private void linkLabel1_LinkClicked( object sender, LinkLabelLinkClickedEventArgs e )
         {
             Process.Start( @"http://softez.pp.ua/" );
+        }
+
+        private void btnRemOrange_Click( object sender, EventArgs e )
+        {
+            if ( ae != null )
+            {
+                ae.removeOrangeFiles();
+                MessageBox.Show( "Удалено!", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information );
+            }
         }
     }
 }
