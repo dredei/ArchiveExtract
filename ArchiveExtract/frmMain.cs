@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using ExtensionMethods;
+using Windows7.DesktopIntegration.WindowsForms;
 
 namespace ArchiveExtract
 {
@@ -16,6 +18,7 @@ namespace ArchiveExtract
     {
         ArchiveE ae = null;
         Thread thr = null;
+        SaveHistory history;
 
         public frmMain()
         {
@@ -28,19 +31,6 @@ namespace ArchiveExtract
             return fi.Length;
         }
 
-        private string hSize( long sizeB )
-        {
-            string[] sizes = { "B", "KB", "MB", "GB" };
-            int order = 0;
-            while ( sizeB >= 1024 && order + 1 < sizes.Length )
-            {
-                order++;
-                sizeB = sizeB / 1024;
-            }
-            string result = String.Format( "{0:0.##} {1}", sizeB, sizes[ order ] );
-            return result;
-        }
-
         private void updProgress( object sender, UpdEventExtractArgs e )
         {
             pbAll.Maximum = e.maxProgress;
@@ -49,6 +39,7 @@ namespace ArchiveExtract
             pbArchive.Value = e.archiveProgress;
             lvFiles.Items[ e.index ].BackColor = e.color;
             lvFiles.Items[ e.index ].EnsureVisible();
+            pbAll.SetTaskbarProgress();
         }
 
         private void workExtract()
@@ -60,10 +51,20 @@ namespace ArchiveExtract
             int orangeFilesCount = ( ae.getOrangeFiles() ).Count;
             if ( orangeFilesCount > 0 )
             {
-                const string text = "Найдено {0} \"оранжевых\" файлов.";
-                MessageBox.Show( String.Format( text, orangeFilesCount ), "Информация", MessageBoxButtons.OK, MessageBoxIcon.Question );
+                const string text = "Найдено {0} \"оранжевых\" файлов.\nУдалить их?";
+                DialogResult res = MessageBox.Show( String.Format( text, orangeFilesCount ), "Информация", MessageBoxButtons.YesNo, MessageBoxIcon.Question );
+                if ( res == DialogResult.Yes )
+                {
+                    btnRemOrange_Click( btnRemOrange, new EventArgs() );
+                }
             }
             enableObjs();
+        }
+
+        private void getPaths()
+        {
+            lbPaths.Items.Clear();
+            lbPaths.Items.AddRange( this.history.getPaths() );
         }
 
         private void fillLv()
@@ -79,7 +80,7 @@ namespace ArchiveExtract
                 string file = files[ i ];
                 ListViewItem li = new ListViewItem();
                 li.Text = Path.GetFileName( file );
-                li.SubItems.Add( hSize( getFileSize( file ) ).ToString() );
+                li.SubItems.Add( ExMethods.getSizeReadable( getFileSize( file ) ) );
                 li.BackColor = Color.White;
                 lvFiles.Items.Add( li );
                 lvFiles.Items[ lvFiles.Items.Count - 1 ].EnsureVisible();
@@ -89,8 +90,8 @@ namespace ArchiveExtract
 
         private void btnSearch_Click( object sender, EventArgs e )
         {
-            enableObjs();            
-            ae = new ArchiveE( tbPath.Text, cbZip.Checked, cbRar.Checked, cbRemove.Checked );
+            enableObjs();
+            ae = new ArchiveE( lbPaths.Items.Cast<string>().ToArray(), cbZip.Checked, cbRar.Checked, cbRemove.Checked );
             ae.searchFiles();
             fillLv();
             enableObjs();
@@ -98,14 +99,13 @@ namespace ArchiveExtract
 
         private void enableObjs()
         {
-            tbPath.Enabled = !tbPath.Enabled;
             cbRar.Enabled = !cbRar.Enabled;
             cbRemove.Enabled = !cbRemove.Enabled;
             cbZip.Enabled = !cbZip.Enabled;
             btnExtract.Enabled = !btnExtract.Enabled;
             btnSearch.Enabled = !btnSearch.Enabled;
-            btnSelectDir.Enabled = !btnSelectDir.Enabled;
             btnRemOrange.Enabled = !btnRemOrange.Enabled;
+            lbPaths.Enabled = !lbPaths.Enabled;
         }
 
         private void btnExtract_Click( object sender, EventArgs e )
@@ -127,6 +127,7 @@ namespace ArchiveExtract
 
         private void frmMain_FormClosing( object sender, FormClosingEventArgs e )
         {
+            this.history.saveHistory();
             if ( thr != null )
             {
                 thr.Abort();
@@ -136,15 +137,8 @@ namespace ArchiveExtract
         private void frmMain_Load( object sender, EventArgs e )
         {
             System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
-        }
-
-        private void btnSelectDir_Click( object sender, EventArgs e )
-        {
-            fbd1.SelectedPath = tbPath.Text;
-            if ( fbd1.ShowDialog() == DialogResult.OK )
-            {
-                tbPath.Text = fbd1.SelectedPath;
-            }
+            this.history = new SaveHistory();
+            this.getPaths();
         }
 
         private void linkLabel1_LinkClicked( object sender, LinkLabelLinkClickedEventArgs e )
@@ -171,6 +165,23 @@ namespace ArchiveExtract
             {
                 ae.removeFile( lvFiles.SelectedItems[ i ].Index );
             }
+        }
+
+        private void добавитьToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            if ( fbd1.ShowDialog() == DialogResult.OK )
+            {
+                string path = fbd1.SelectedPath;
+                this.history.addPath( path );
+                this.getPaths();
+            }
+        }
+
+        private void удалитьToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            int index = lbPaths.SelectedIndex;
+            this.history.deletePath( index );
+            this.getPaths();
         }
     }
 }

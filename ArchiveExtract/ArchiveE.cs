@@ -23,7 +23,7 @@ namespace ArchiveExtract
 
     class ArchiveE
     {
-        string path;
+        string[] paths;
         bool zip;
         bool rar;
         bool remove;
@@ -31,9 +31,9 @@ namespace ArchiveExtract
         List<string> orangeFiles;
         public event EventHandler<UpdEventExtractArgs> updEventExtract = delegate { };
 
-        public ArchiveE( string path, bool zip, bool rar, bool remove )
+        public ArchiveE( string[] paths, bool zip, bool rar, bool remove )
         {
-            this.path = path;
+            this.paths = paths;
             this.zip = zip;
             this.rar = rar;
             this.remove = remove;
@@ -75,12 +75,16 @@ namespace ArchiveExtract
 
         public List<string> searchFilesByExtension( string extension )
         {
-            if ( Directory.Exists( path ) )
+            List<string> files = new List<string>();
+            for ( int i = 0; i < this.paths.Length; i++ )
             {
-                string[] files = Directory.GetFiles( path, extension, SearchOption.AllDirectories );
-                return files.ToList<string>();
+                string path = paths[ i ];
+                if ( Directory.Exists( path ) )
+                {
+                    files.AddRange( Directory.GetFiles( path, extension, SearchOption.AllDirectories ).ToList<string>() );
+                }
             }
-            return new List<string>();
+            return files;
         }
 
         public void removeOrangeFiles()
@@ -98,8 +102,6 @@ namespace ArchiveExtract
         {
             UpdEventExtractArgs args = new UpdEventExtractArgs();
             orangeFiles.Clear();
-            //string folder = path + @"\";
-            Color color = Color.Yellow;
             args.progress = 0;
             args.maxProgress = files.Count;
             updEventExtract( this, args );
@@ -124,7 +126,7 @@ namespace ArchiveExtract
                             {
                                 if ( !reader.Entry.IsDirectory )
                                 {
-                                    reader.WriteEntryToDirectory( Path.GetDirectoryName( file ) +@"\" + Path.GetFileNameWithoutExtension( file ), ExtractOptions.ExtractFullPath | ExtractOptions.Overwrite );
+                                    reader.WriteEntryToDirectory( Path.GetDirectoryName( file ) + @"\" + Path.GetFileNameWithoutExtension( file ), ExtractOptions.ExtractFullPath | ExtractOptions.Overwrite );
                                 }
                             }
                         }
@@ -153,7 +155,7 @@ namespace ArchiveExtract
                 }
                 finally
                 {
-                    if ( this.remove && color != Color.Red )
+                    if ( this.remove && args.color != Color.Red )
                     {
                         try
                         {
