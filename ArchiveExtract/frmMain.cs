@@ -194,6 +194,7 @@ namespace ArchiveExtract
             for ( int i = 0; i < lvFiles.SelectedItems.Count; i++ )
             {
                 ae.removeFile( lvFiles.SelectedItems[ i ].Index );
+                this.fillLv();
             }
         }
 
