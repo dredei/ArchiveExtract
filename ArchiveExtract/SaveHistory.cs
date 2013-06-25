@@ -79,6 +79,11 @@ namespace ArchiveExtract
             sortByDate();
         }
 
+        public void clearPaths()
+        {
+            this.history.History.Clear();
+        }
+
         public string[] getPaths()
         {
             string[] paths = new string[ this.history.History.Count ];

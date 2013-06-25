@@ -50,6 +50,7 @@
             this.добавитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.удалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.очиститьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cms1.SuspendLayout();
             this.cms2.SuspendLayout();
             this.SuspendLayout();
@@ -211,9 +212,10 @@
             this.cms2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.добавитьToolStripMenuItem,
             this.toolStripMenuItem2,
+            this.очиститьToolStripMenuItem,
             this.удалитьToolStripMenuItem});
             this.cms2.Name = "contextMenuStrip1";
-            this.cms2.Size = new System.Drawing.Size(128, 54);
+            this.cms2.Size = new System.Drawing.Size(172, 98);
             // 
             // добавитьToolStripMenuItem
             // 
@@ -225,7 +227,7 @@
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(124, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
             // 
             // удалитьToolStripMenuItem
             // 
@@ -233,6 +235,13 @@
             this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.удалитьToolStripMenuItem.Text = "Удалить";
             this.удалитьToolStripMenuItem.Click += new System.EventHandler(this.удалитьToolStripMenuItem_Click);
+            // 
+            // очиститьToolStripMenuItem
+            // 
+            this.очиститьToolStripMenuItem.Name = "очиститьToolStripMenuItem";
+            this.очиститьToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.очиститьToolStripMenuItem.Text = "Очистить список";
+            this.очиститьToolStripMenuItem.Click += new System.EventHandler(this.очиститьToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -290,6 +299,7 @@
         private System.Windows.Forms.ToolStripMenuItem добавитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem удалитьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem очиститьToolStripMenuItem;
     }
 }
 

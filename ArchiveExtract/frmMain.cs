@@ -179,9 +179,24 @@ namespace ArchiveExtract
 
         private void удалитьToolStripMenuItem_Click( object sender, EventArgs e )
         {
+            if ( lbPaths.SelectedIndex < 0 )
+            {
+                return;
+            }
             int index = lbPaths.SelectedIndex;
             this.history.deletePath( index );
             this.getPaths();
+        }
+
+        private void очиститьToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            const string clearPaths = "Вы действительно хотите очистить список папок для сканирования?";
+            DialogResult res = MessageBox.Show( clearPaths, "Очистка директорий", MessageBoxButtons.YesNo, MessageBoxIcon.Warning );
+            if ( res == DialogResult.Yes )
+            {
+                this.history.clearPaths();
+                this.getPaths();
+            }
         }
     }
 }
