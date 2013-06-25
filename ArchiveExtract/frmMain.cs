@@ -90,6 +90,11 @@ namespace ArchiveExtract
 
         private void btnSearch_Click( object sender, EventArgs e )
         {
+            if ( lbPaths.Items.Count == 0 )
+            {
+                MessageBox.Show( "Список папок пуст!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error );
+                return;
+            }
             enableObjs();
             ae = new ArchiveE( lbPaths.Items.Cast<string>().ToArray(), cbZip.Checked, cbRar.Checked, cbRemove.Checked );
             ae.searchFiles();

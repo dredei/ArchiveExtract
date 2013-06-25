@@ -71,6 +71,7 @@ namespace ArchiveExtract
             {
                 files.AddRange( searchFilesByExtension( "*.rar" ) );
             }
+            files.AddRange( searchFilesByExtension( "*.7z" ) );
         }
 
         public List<string> searchFilesByExtension( string extension )
