@@ -51,6 +51,7 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.удалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.очиститьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cbSevenZ = new System.Windows.Forms.CheckBox();
             this.cms1.SuspendLayout();
             this.cms2.SuspendLayout();
             this.SuspendLayout();
@@ -215,24 +216,24 @@
             this.очиститьToolStripMenuItem,
             this.удалитьToolStripMenuItem});
             this.cms2.Name = "contextMenuStrip1";
-            this.cms2.Size = new System.Drawing.Size(172, 98);
+            this.cms2.Size = new System.Drawing.Size(172, 76);
             // 
             // добавитьToolStripMenuItem
             // 
             this.добавитьToolStripMenuItem.Name = "добавитьToolStripMenuItem";
-            this.добавитьToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.добавитьToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.добавитьToolStripMenuItem.Text = "Добавить";
             this.добавитьToolStripMenuItem.Click += new System.EventHandler(this.добавитьToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(168, 6);
             // 
             // удалитьToolStripMenuItem
             // 
             this.удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
-            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.удалитьToolStripMenuItem.Text = "Удалить";
             this.удалитьToolStripMenuItem.Click += new System.EventHandler(this.удалитьToolStripMenuItem_Click);
             // 
@@ -243,6 +244,19 @@
             this.очиститьToolStripMenuItem.Text = "Очистить список";
             this.очиститьToolStripMenuItem.Click += new System.EventHandler(this.очиститьToolStripMenuItem_Click);
             // 
+            // cbSevenZ
+            // 
+            this.cbSevenZ.AutoSize = true;
+            this.cbSevenZ.Checked = true;
+            this.cbSevenZ.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbSevenZ.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cbSevenZ.Location = new System.Drawing.Point(107, 272);
+            this.cbSevenZ.Name = "cbSevenZ";
+            this.cbSevenZ.Size = new System.Drawing.Size(37, 17);
+            this.cbSevenZ.TabIndex = 15;
+            this.cbSevenZ.Text = "7z";
+            this.cbSevenZ.UseVisualStyleBackColor = true;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -250,6 +264,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(279, 437);
+            this.Controls.Add(this.cbSevenZ);
             this.Controls.Add(this.lbPaths);
             this.Controls.Add(this.btnRemOrange);
             this.Controls.Add(this.linkLabel1);
@@ -300,6 +315,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem удалитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem очиститьToolStripMenuItem;
+        private System.Windows.Forms.CheckBox cbSevenZ;
     }
 }
 

@@ -96,7 +96,11 @@ namespace ArchiveExtract
                 return;
             }
             enableObjs();
-            ae = new ArchiveE( lbPaths.Items.Cast<string>().ToArray(), cbZip.Checked, cbRar.Checked, cbRemove.Checked );
+            bool zip = cbZip.Checked;
+            bool rar = cbRar.Checked;
+            bool sevenZ = cbSevenZ.Checked;
+            bool remove = cbRemove.Checked;
+            ae = new ArchiveE( lbPaths.Items.Cast<string>().ToArray(), zip, rar, sevenZ, remove );
             ae.searchFiles();
             fillLv();
             enableObjs();

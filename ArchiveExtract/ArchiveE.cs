@@ -26,16 +26,18 @@ namespace ArchiveExtract
         string[] paths;
         bool zip;
         bool rar;
+        bool sevenZ;
         bool remove;
         List<string> files;
         List<string> orangeFiles;
         public event EventHandler<UpdEventExtractArgs> updEventExtract = delegate { };
 
-        public ArchiveE( string[] paths, bool zip, bool rar, bool remove )
+        public ArchiveE( string[] paths, bool zip, bool rar, bool sevenZ, bool remove )
         {
             this.paths = paths;
             this.zip = zip;
             this.rar = rar;
+            this.sevenZ = sevenZ;
             this.remove = remove;
             files = new List<string>();
             orangeFiles = new List<string>();
@@ -71,7 +73,10 @@ namespace ArchiveExtract
             {
                 files.AddRange( searchFilesByExtension( "*.rar" ) );
             }
-            files.AddRange( searchFilesByExtension( "*.7z" ) );
+            if ( sevenZ )
+            {
+                files.AddRange( searchFilesByExtension( "*.7z" ) );
+            }
         }
 
         public List<string> searchFilesByExtension( string extension )
