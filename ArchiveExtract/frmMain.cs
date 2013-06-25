@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using ExtensionMethods;
+using Ini;
 using Windows7.DesktopIntegration.WindowsForms;
 
 namespace ArchiveExtract
@@ -29,6 +30,24 @@ namespace ArchiveExtract
         {
             FileInfo fi = new FileInfo( file );
             return fi.Length;
+        }
+
+        private void saveSettings()
+        {
+            IniFile ini = new IniFile( Application.StartupPath + @"\Settings.ini" );
+            ini.Write( "rar", cbRar.Checked.ToString(), "Options" );
+            ini.Write( "zip", cbZip.Checked.ToString(), "Options" );
+            ini.Write( "7z", cbSevenZ.Checked.ToString(), "Options" );
+            ini.Write( "Remove", cbRemove.Checked.ToString(), "Options" );
+        }
+
+        private void loadSettings()
+        {
+            IniFile ini = new IniFile( Application.StartupPath + @"\Settings.ini" );
+            cbRar.Checked = bool.Parse( ini.Read( "rar", "Options", cbRar.Checked.ToString() ) );
+            cbZip.Checked = bool.Parse( ini.Read( "zip", "Options", cbZip.Checked.ToString() ) );
+            cbSevenZ.Checked = bool.Parse( ini.Read( "7z", "Options", cbSevenZ.Checked.ToString() ) );
+            cbRemove.Checked = bool.Parse( ini.Read( "Remove", "Options", cbRemove.Checked.ToString() ) );
         }
 
         private void updProgress( object sender, UpdEventExtractArgs e )
@@ -137,6 +156,7 @@ namespace ArchiveExtract
         private void frmMain_FormClosing( object sender, FormClosingEventArgs e )
         {
             this.history.saveHistory();
+            this.saveSettings();
             if ( thr != null )
             {
                 thr.Abort();
@@ -148,6 +168,7 @@ namespace ArchiveExtract
             System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
             this.history = new SaveHistory();
             this.getPaths();
+            this.loadSettings();
         }
 
         private void linkLabel1_LinkClicked( object sender, LinkLabelLinkClickedEventArgs e )

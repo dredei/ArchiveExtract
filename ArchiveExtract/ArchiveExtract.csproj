@@ -35,6 +35,9 @@
     <Reference Include="ExtensionMethods">
       <HintPath>..\..\ExtensionMethods\ExtensionMethods\bin\Release\ExtensionMethods.dll</HintPath>
     </Reference>
+    <Reference Include="IniFile">
+      <HintPath>..\..\IniFile\IniFile\bin\Release\IniFile.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
