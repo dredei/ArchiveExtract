@@ -130,6 +130,7 @@ namespace ArchiveExtract
             cbRar.Enabled = !cbRar.Enabled;
             cbRemove.Enabled = !cbRemove.Enabled;
             cbZip.Enabled = !cbZip.Enabled;
+            cbSevenZ.Enabled = !cbSevenZ.Enabled;
             btnExtract.Enabled = !btnExtract.Enabled;
             btnSearch.Enabled = !btnSearch.Enabled;
             btnRemOrange.Enabled = !btnRemOrange.Enabled;
