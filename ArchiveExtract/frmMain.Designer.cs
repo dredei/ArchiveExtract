@@ -196,7 +196,7 @@
             this.btnRemOrange.Name = "btnRemOrange";
             this.btnRemOrange.Size = new System.Drawing.Size(273, 23);
             this.btnRemOrange.TabIndex = 13;
-            this.btnRemOrange.Text = "Удалить оранжевые файлы";
+            this.btnRemOrange.Text = "Удалить \"оранжевые\" архивы";
             this.btnRemOrange.UseVisualStyleBackColor = true;
             this.btnRemOrange.Click += new System.EventHandler(this.btnRemOrange_Click);
             // 
